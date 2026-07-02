@@ -6,8 +6,8 @@
    ============================================================ */
 
 /* 1. Supabase project — from Supabase → Project Settings → API */
-window.BARHAM_SUPABASE_URL      = "https://YOUR-PROJECT.supabase.co";
-window.BARHAM_SUPABASE_ANON_KEY = "YOUR-PUBLIC-ANON-KEY";
+window.BARHAM_SUPABASE_URL      = "https://aastgbmsgyqbumjnsofk.supabase.co";
+window.BARHAM_SUPABASE_ANON_KEY = "sb_publishable_IeS6rFMuhN6e81gls8R7UQ_5kJqZ4B8";
 
 /* 2. Bookable waters. Add more objects to offer more exclusive waters. */
 window.BARHAM_WATERS = {
