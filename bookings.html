@@ -1,302 +1,59 @@
 <!DOCTYPE html>
-<html lang="en-GB">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book the Lodge — The Barham Lakes</title>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book — The Barham Lakes | Check Availability</title>
+<meta name="description" content="Check live availability and request a booking on any of The Barham Lakes waters or the lakeside lodge — near Ipswich, Suffolk.">
+<link rel="canonical" href="https://www.thebarhamlakes.co.uk/bookings.html">
+<meta name="robots" content="noindex, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--green:#1f6f54;--green-d:#164f3d;--ink:#1b1d18;--mute:#6b6d63;--line:#e3e0d6;--cream:#f6f3ea;--bg:#fff;--book:#c0392b;--sel:#1f6f54;}
+:root{--bg:#12140e;--bg2:#1a1d14;--cream:#f2eee2;--green:#9bad57;--green-d:#71803c;--ink:#20221a;--muted:#9a9c8c;--line:rgba(242,238,226,.14);--serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,Arial,sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55;}
-a{color:inherit;}
-.wrap{max-width:1180px;margin:0 auto;padding:0 22px;}
-header.nav{background:var(--ink);color:#fff;}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
-.brand{font-weight:700;font-size:17px;letter-spacing:.3px;}
-.brand small{display:block;font-size:9px;letter-spacing:.28em;color:#b9bcae;font-weight:600;}
-.nav-in a{color:#e7e4d7;text-decoration:none;font-size:14px;}
-.nav-in a#nav-account{background:var(--green);color:#fff;padding:8px 14px;border-radius:4px;}
-.head{padding:34px 0 8px;}
-.head h1{font-size:30px;}
-.head p{color:var(--mute);}
-.tabs{display:flex;gap:8px;margin:18px 0 10px;flex-wrap:wrap;}
-.tab{background:#fff;border:1px solid var(--line);border-radius:30px;padding:8px 18px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);}
-.tab.active{background:var(--green);color:#fff;border-color:var(--green);}
-.layout{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:start;padding:14px 0 60px;}
-.cal-card,.side{background:#fff;border:1px solid var(--line);border-radius:12px;}
-.cal-card{padding:18px 20px 24px;}
-.cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.cal-top h2{font-size:19px;}
-.cal-nav button{background:var(--cream);border:1px solid var(--line);border-radius:6px;width:34px;height:34px;font-size:16px;cursor:pointer;}
-.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
-.dow{text-align:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700;padding:4px 0;}
-.day{aspect-ratio:1/1;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:15px;font-weight:600;cursor:pointer;background:#fff;position:relative;transition:.12s;}
-.day .p{font-size:9px;font-weight:600;color:var(--mute);letter-spacing:.05em;}
-.day.empty{border:0;cursor:default;}
-.day.past{color:#c7c7bd;background:#faf9f4;cursor:not-allowed;}
-.day.unavail{background:#f3ded9;color:#b06a5e;cursor:not-allowed;text-decoration:line-through;}
-.day.avail:hover{border-color:var(--green);background:#eef5f1;}
-.day.selstart,.day.selend{background:var(--green);color:#fff;border-color:var(--green);}
-.day.inrange{background:#dbeee4;border-color:#bcdfcd;}
-.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--mute);}
-.legend span{display:inline-flex;align-items:center;gap:6px;}
-.sw{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid var(--line);}
-.side{padding:20px;position:sticky;top:16px;}
-.side h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px;}
-.srow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px;}
-.srow .v{font-weight:700;}
-.big{display:flex;justify-content:space-between;align-items:baseline;margin:12px 0 4px;}
-.big .amt{font-size:28px;font-weight:800;color:var(--green);}
-.dep{font-size:13px;color:var(--mute);margin-bottom:14px;}
-label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:12px 0 4px;}
-select,input,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;}
-.cta{display:block;width:100%;text-align:center;background:var(--green);color:#fff;border:0;border-radius:6px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;text-decoration:none;}
-.cta:hover{background:var(--green-d);}
-.cta[disabled]{background:#c3c9c1;cursor:not-allowed;}
-.muted{color:var(--mute);font-size:12px;margin-top:10px;line-height:1.5;}
-.authbox{background:var(--cream);border:1px dashed var(--line);border-radius:8px;padding:16px;text-align:center;font-size:13.5px;color:var(--mute);}
-.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;font-size:14px;z-index:50;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.toast.success{background:var(--green);}.toast.error{background:var(--book);}
-.banner{background:#eef5f1;border:1px solid #bcdfcd;color:var(--green-d);padding:12px 16px;border-radius:8px;margin:16px 0;font-size:14px;display:none;}
-@media(max-width:860px){.layout{grid-template-columns:1fr;}.side{position:static;}}
-</style>
-</head>
-<body>
-<header class="nav"><div class="wrap nav-in">
-  <a href="index.html" style="text-decoration:none;"><span class="brand">The Barham Lakes<small>EST. 2018 · SUFFOLK</small></span></a>
-  <nav style="display:flex;gap:20px;align-items:center;">
-    <a href="index.html">Home</a>
-    <a href="bookings.html">Book</a>
-    <a href="syndicate.html">Syndicate</a>
-    <a id="nav-account" href="account.html">Sign in</a>
-  </nav>
-</div></header>
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;} .wrap{max-width:1160px;margin:0 auto;padding:0 28px;}
+.topbar{background:var(--bg);border-bottom:1px solid var(--line);}
+.tb{display:flex;align-items:center;justify-content:space-between;height:74px;}
+.logo b{font-family:var(--serif);font-size:18px;color:var(--cream);} .logo small{display:block;font-size:9px;letter-spacing:.3em;color:var(--muted);}
+.menu{display:flex;gap:26px;} .menu a{font-size:14px;color:#d9d5c6;} .menu a:hover{color:var(--green);}
+.tb .cta{display:flex;gap:14px;align-items:center;} .tb .cta a.mem{font-size:13px;color:var(--muted);}
+.head{padding:40px 0 6px;} .head .label{font-size:12px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--green-d);}
+.head h1{font-family:var(--serif);font-weight:500;font-size:38px;margin:10px 0 4px;color:var(--ink);}
+.head p{color:#5c5e4f;}
+main{padding:22px 0 70px;}
+footer{background:#0d0f09;border-top:1px solid var(--line);padding:40px 0;font-size:13px;color:var(--muted);}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+@media(max-width:800px){.menu,.tb .cta .mem{display:none;}}
+</style></head><body>
 
-<div class="wrap">
-  <div class="head">
-    <h1>Book an exclusive stay</h1>
-    <p>Choose your water, pick your arrival and departure nights, and secure it with a 30% deposit.</p>
-  </div>
-  <div class="tabs" id="tabs"></div>
-  <div class="banner" id="paid-banner">✓ Deposit received — your booking is confirmed. A confirmation email is on its way. See it any time in <a href="account.html">My Account</a>.</div>
+<div class="topbar"><div class="wrap tb">
+  <a class="logo" href="index.html"><b>The Barham Lakes</b><small>EST. 2018 · SUFFOLK</small></a>
+  <nav class="menu"><a href="index.html#lakes">The Water</a><a href="lodge.html">The Lodge</a><a href="syndicate.html">Syndicate</a><a href="index.html#journal">Catch Journal</a><a href="index.html#visit">Visit</a></nav>
+  <div class="cta"><a class="mem" href="account.html" style="color:#d9d5c6;">Members ▸</a></div>
+</div></div>
 
-  <div class="layout">
-    <div class="cal-card">
-      <div class="cal-top">
-        <h2 id="mlabel">—</h2>
-        <div class="cal-nav"><button id="prev">‹</button> <button id="next">›</button></div>
-      </div>
-      <div class="grid7" id="dow"></div>
-      <div class="grid7" id="cal" style="margin-top:6px;"></div>
-      <div class="legend">
-        <span><i class="sw" style="background:#fff;"></i> Available</span>
-        <span><i class="sw" style="background:var(--green);border-color:var(--green);"></i> Your dates</span>
-        <span><i class="sw" style="background:#f3ded9;border-color:#e6c4bc;"></i> Taken / blocked</span>
-        <span><i class="sw" style="background:#faf9f4;"></i> Past</span>
-      </div>
-    </div>
-
-    <div class="side">
-      <h3>Your stay</h3>
-      <div class="srow"><span>Water</span><span class="v" id="s-water">—</span></div>
-      <div class="srow"><span>Arrive</span><span class="v" id="s-in">—</span></div>
-      <div class="srow"><span>Depart</span><span class="v" id="s-out">—</span></div>
-      <div class="srow"><span>Nights</span><span class="v" id="s-nights">—</span></div>
-      <div class="srow"><span>Season</span><span class="v" id="s-season">—</span></div>
-      <label for="s-anglers">Anglers</label>
-      <select id="s-anglers"></select>
-      <div class="big"><span>Total</span><span class="amt" id="s-price">—</span></div>
-      <div class="dep" id="s-dep">Select your arrival and departure dates to see pricing.</div>
-
-      <div id="auth-prompt" class="authbox" style="display:none;">
-        You’ll need a free account to book — it takes a minute and keeps all your stays in one place.<br><br>
-        <a class="cta" href="account.html">Sign in / Create account →</a>
-      </div>
-      <form id="book-form" style="display:none;">
-        <label>Name</label><input id="f-name" required placeholder="Your name">
-        <label>Phone</label><input id="f-phone" placeholder="07xxx xxxxxx">
-        <label>Notes (optional)</label><textarea id="f-notes" rows="2" placeholder="Anything we should know"></textarea>
-        <button class="cta" id="book-btn" type="submit" disabled>Pay deposit &amp; book →</button>
-        <p class="muted">A 30% deposit secures your dates. The balance is due 8 weeks before arrival. A refundable £150 security deposit is taken on arrival.</p>
-      </form>
-    </div>
-  </div>
+<div class="wrap head">
+  <span class="label">Booking</span>
+  <h1>Check availability</h1>
+  <p>Choose a water or the lodge, pick an open slot in the calendar, and send your request. Payment is added once Stripe is connected.</p>
 </div>
 
-<!-- Netlify picks this up at deploy time; JS posts a notification to it -->
+<main><div class="wrap">
+  <div id="barham-cal"></div>
+</div></main>
+
+<!-- Netlify picks this up so booking requests email the owner -->
 <form name="booking-request" data-netlify="true" netlify-honeypot="bot-field" hidden>
-  <input name="water"><input name="check_in"><input name="check_out"><input name="nights">
-  <input name="anglers"><input name="price"><input name="deposit">
-  <input name="name"><input name="email"><input name="phone"><textarea name="notes"></textarea><input name="bot-field">
+  <input name="water"><input name="check_in"><input name="check_out"><input name="nights"><input name="anglers">
+  <input name="price"><input name="deposit"><input name="name"><input name="email"><input name="phone"><textarea name="notes"></textarea><input name="bot-field">
 </form>
 
-<div class="toast" id="toast">—</div>
+<footer><div class="wrap foot">
+  <span>© The Barham Lakes 2026 — All rights reserved</span>
+  <span>Concept design by AJH Technology · ajhtechnology.digital</span>
+</div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="booking-config.js"></script>
-<script>
-const sb = window.supabase.createClient(window.BARHAM_SUPABASE_URL, window.BARHAM_SUPABASE_ANON_KEY);
-const WATERS = window.BARHAM_WATERS;
-let waterKey = Object.keys(WATERS)[0];
-let viewMonth = new Date(); viewMonth.setDate(1); viewMonth.setHours(0,0,0,0);
-let taken = [];              // [{check_in, check_out}] for current water
-let selIn = null, selOut = null;
-let session = null, profile = null;
-
-const $ = id => document.getElementById(id);
-const iso = d => { const x=new Date(d); x.setHours(0,0,0,0); return x.toISOString().slice(0,10); };
-const addDays = (s,n)=>{ const x=new Date(s+'T00:00:00'); x.setDate(x.getDate()+n); return iso(x); };
-const todayISO = iso(new Date());
-
-/* ---- availability ---- */
-function nightTaken(dateStr){
-  return taken.some(b => dateStr >= b.check_in && dateStr < b.check_out);
-}
-function rangeClear(inS,outS){          // every night in [in,out) must be free
-  for(let d=inS; d<outS; d=addDays(d,1)) if(nightTaken(d)) return false;
-  return true;
-}
-async function loadAvailability(){
-  const from = iso(new Date(viewMonth.getFullYear(), viewMonth.getMonth()-1, 1));
-  const to   = iso(new Date(viewMonth.getFullYear(), viewMonth.getMonth()+2, 1));
-  const { data, error } = await sb.from('public_bookings').select('*')
-      .eq('water', waterKey).lt('check_in', to).gt('check_out', from);
-  taken = error ? [] : (data||[]);
-  render();
-}
-
-/* ---- calendar ---- */
-function render(){
-  $('mlabel').textContent = viewMonth.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-  const cal = $('cal'); cal.innerHTML='';
-  const first = new Date(viewMonth), start = (first.getDay()+6)%7; // Monday-first
-  for(let i=0;i<start;i++){ const e=document.createElement('div'); e.className='day empty'; cal.appendChild(e); }
-  const dim = new Date(viewMonth.getFullYear(), viewMonth.getMonth()+1, 0).getDate();
-  for(let d=1; d<=dim; d++){
-    const dateStr = iso(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d));
-    const cell=document.createElement('div'); cell.className='day'; cell.dataset.date=dateStr;
-    cell.innerHTML = `<span>${d}</span>`;
-    const past = dateStr < todayISO;
-    if(past){ cell.classList.add('past'); }
-    else if(nightTaken(dateStr) && dateStr!==selOut){ cell.classList.add('unavail'); }
-    else {
-      cell.classList.add('avail');
-      cell.addEventListener('click', ()=>pick(dateStr));
-    }
-    if(selIn && dateStr===selIn) cell.classList.add('selstart');
-    if(selOut && dateStr===selOut) cell.classList.add('selend');
-    if(selIn && selOut && dateStr>selIn && dateStr<selOut) cell.classList.add('inrange');
-    cal.appendChild(cell);
-  }
-}
-function pick(dateStr){
-  if(!selIn || selOut){ selIn=dateStr; selOut=null; }      // start new range
-  else if(dateStr>selIn){
-    if(!rangeClear(selIn,dateStr)){ toast('Those nights include a taken date — pick a shorter stay.','error'); return; }
-    selOut=dateStr;
-  } else { selIn=dateStr; selOut=null; }
-  render(); updateSummary();
-}
-
-/* ---- summary / pricing ---- */
-function updateSummary(){
-  const w = WATERS[waterKey];
-  $('s-water').textContent = w.name;
-  if(!selIn){ $('s-in').textContent='—'; }
-  $('s-in').textContent = selIn ? fmt(selIn) : '—';
-  $('s-out').textContent = selOut ? fmt(selOut) : '—';
-  const canPrice = selIn && selOut;
-  const anglers = parseInt($('s-anglers').value||w.includedAnglers,10);
-  if(canPrice){
-    const q = window.BARHAM.quote(waterKey, selIn, selOut, anglers);
-    if(q.nights < w.minNights){ $('s-dep').textContent=`Minimum stay is ${w.minNights} nights.`; setBookable(false); }
-    $('s-nights').textContent = q.nights; $('s-season').textContent=q.seasonLabel;
-    $('s-price').textContent = window.BARHAM.money(q.price);
-    $('s-dep').textContent = `Deposit now ${window.BARHAM.money(q.deposit)} · balance ${window.BARHAM.money(q.balance)} due 8 weeks before.`;
-    setBookable(q.nights >= w.minNights);
-    window._q = q;
-  } else {
-    $('s-nights').textContent='—'; $('s-season').textContent='—'; $('s-price').textContent='—';
-    $('s-dep').textContent='Select your arrival and departure dates to see pricing.'; setBookable(false);
-  }
-}
-function setBookable(ok){ const b=$('book-btn'); if(b) b.disabled = !ok; }
-function fmt(s){ return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); }
-
-/* ---- tabs / anglers ---- */
-function buildTabs(){
-  const t=$('tabs'); t.innerHTML='';
-  Object.entries(WATERS).forEach(([k,w])=>{
-    const b=document.createElement('button'); b.className='tab'+(k===waterKey?' active':''); b.textContent=w.name;
-    b.onclick=()=>{ waterKey=k; selIn=selOut=null; document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); b.classList.add('active'); buildAnglers(); loadAvailability(); updateSummary(); };
-    t.appendChild(b);
-  });
-}
-function buildAnglers(){
-  const w=WATERS[waterKey], s=$('s-anglers'); s.innerHTML='';
-  for(let n=1;n<=w.maxAnglers;n++){ const o=document.createElement('option'); o.value=n; o.textContent=`${n} angler${n>1?'s':''}${n<=w.includedAnglers?' (included)':' (+£'+w.extraAnglerPerNight+'/night)'}`; if(n===w.includedAnglers)o.selected=true; s.appendChild(o); }
-  s.onchange=updateSummary;
-}
-
-/* ---- auth ---- */
-async function initAuth(){
-  const { data } = await sb.auth.getSession(); session = data.session;
-  if(session){
-    const { data:p } = await sb.from('profiles').select('*').eq('id',session.user.id).single(); profile=p;
-    const nav=$('nav-account');
-    if(p && p.role==='admin'){ nav.textContent='Admin'; nav.href='admin-bookings.html'; } else nav.textContent='My Account ✓';
-    $('auth-prompt').style.display='none'; $('book-form').style.display='block';
-    $('f-name').value = p?.full_name || ''; $('f-phone').value = p?.phone || '';
-  } else {
-    $('auth-prompt').style.display='block'; $('book-form').style.display='none';
-  }
-}
-
-/* ---- create booking + deposit checkout ---- */
-$('book-form').addEventListener('submit', async e=>{
-  e.preventDefault();
-  if(!session || !selIn || !selOut || !window._q) return;
-  if(!rangeClear(selIn,selOut)){ toast('Sorry, those dates were just taken. Please pick again.','error'); loadAvailability(); return; }
-  const w=WATERS[waterKey], q=window._q, anglers=parseInt($('s-anglers').value,10);
-  const btn=$('book-btn'); btn.disabled=true; btn.textContent='Creating booking…';
-  const row={ water:waterKey, check_in:selIn, check_out:selOut, nights:q.nights, anglers,
-    season:q.season, price:q.price, deposit:q.deposit, status:'pending', payment_status:'unpaid',
-    user_id:session.user.id, name:$('f-name').value.trim(), email:session.user.email,
-    phone:$('f-phone').value.trim(), notes:$('f-notes').value.trim() };
-  const { data:ins, error } = await sb.from('bookings').insert(row).select().single();
-  if(error){ btn.disabled=false; btn.textContent='Pay deposit & book →'; toast('Could not create booking: '+error.message,'error'); return; }
-  // best-effort email notification to the owner
-  try{ await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:new URLSearchParams({'form-name':'booking-request',water:w.name,check_in:selIn,check_out:selOut,
-      nights:q.nights,anglers,price:'£'+q.price,deposit:'£'+q.deposit,name:row.name,email:row.email,phone:row.phone,notes:row.notes}).toString()}); }catch(_){}
-  // Stripe deposit checkout via Netlify function
-  try{
-    const res=await fetch('/.netlify/functions/create-checkout',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({booking_id:ins.id, amount:q.deposit, water:w.name, check_in:selIn, check_out:selOut, email:row.email})});
-    const out=await res.json();
-    if(out.url){ window.location.href=out.url; return; }
-    throw new Error(out.error||'No checkout URL');
-  }catch(err){
-    btn.disabled=false; btn.textContent='Pay deposit & book →';
-    toast('Booking saved but payment could not start: '+err.message+' — the owner will be in touch.','error');
-  }
-});
-
-function toast(m,k){ const t=$('toast'); t.textContent=m; t.className='toast show '+(k||''); setTimeout(()=>t.classList.remove('show'),3600); }
-
-/* nav */
-$('prev').onclick=()=>{ viewMonth.setMonth(viewMonth.getMonth()-1); loadAvailability(); };
-$('next').onclick=()=>{ viewMonth.setMonth(viewMonth.getMonth()+1); loadAvailability(); };
-
-/* weekday headers */
-['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(d=>{ const e=document.createElement('div'); e.className='dow'; e.textContent=d; $('dow').appendChild(e); });
-
-/* return from Stripe */
-if(new URLSearchParams(location.search).get('paid')==='1'){ $('paid-banner').style.display='block'; }
-
-buildTabs(); buildAnglers(); render();
-initAuth().then(loadAvailability).then(updateSummary);
-</script>
-</body>
-</html>
+<script src="barham-calendar.js"></script>
+</body></html>

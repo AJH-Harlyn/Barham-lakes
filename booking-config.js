@@ -50,6 +50,16 @@ window.BARHAM_BANK_HOLIDAYS = [
   "2026-04-03","2026-04-06","2026-05-04","2026-05-25","2026-08-31","2026-12-25","2026-12-28"
 ];
 
+/* Weekly booking calendar — the same pattern as the Needham Market FC site.
+   Each facility is a bookable water/lodge with opening hours and a session rate. */
+window.BARHAM_CAL_FACILITIES = {
+  "brook-pool":    { name: "Brook Pool + Lodge", open: 6, close: 22, rate: 40, unit: "hour" },
+  "baileys-creek": { name: "Baileys Creek",       open: 6, close: 22, rate: 15, unit: "hour" },
+  "leia-lagoon":   { name: "Leia Lagoon",         open: 6, close: 22, rate: 15, unit: "hour" },
+  "blake-quarry":  { name: "Blake Quarry",        open: 6, close: 22, rate: 15, unit: "hour" },
+  "the-river":     { name: "The River",           open: 6, close: 22, rate: 12, unit: "hour" }
+};
+
 /* ---------- shared helpers (used by public + admin pages) ---------- */
 window.BARHAM = {
   season(dateStr) {
