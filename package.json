@@ -1,0 +1,10 @@
+{
+  "name": "barham-lakes-booking",
+  "version": "1.0.0",
+  "description": "Booking system for The Barham Lakes — Supabase + Netlify Functions + Stripe.",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "stripe": "^16.8.0"
+  }
+}

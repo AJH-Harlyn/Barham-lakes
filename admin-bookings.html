@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Booking Admin — The Barham Lakes</title>
+<style>
+:root{--green:#1f6f54;--green-d:#164f3d;--ink:#1b1d18;--mute:#6b6d63;--line:#e3e0d6;--cream:#f6f3ea;--red:#b3392b;--amber:#8a6d18;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5;font-size:14px;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+header{background:var(--ink);color:#fff;padding:16px 0;}
+header .wrap{display:flex;align-items:center;gap:14px;}
+header h1{font-size:18px;letter-spacing:.02em;}
+header .who{margin-left:auto;font-size:12px;opacity:.7;}
+header .out{color:#e7e4d7;text-decoration:none;font-size:13px;margin-left:16px;cursor:pointer;}
+.tabs{display:flex;gap:6px;margin:24px 0 0;border-bottom:2px solid var(--line);}
+.tab{padding:10px 20px;background:none;border:0;cursor:pointer;font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12px;color:var(--mute);border-bottom:3px solid transparent;margin-bottom:-2px;}
+.tab.active{color:var(--green);border-bottom-color:var(--green);}
+.panel{display:none;padding:24px 0 60px;}.panel.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;}
+.stat .n{font-size:26px;font-weight:800;color:var(--green);}
+.stat .l{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-top:2px;}
+.filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.filters button{border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 14px;cursor:pointer;font:inherit;font-size:13px;font-weight:600;}
+.filters button.active{background:var(--green);color:#fff;border-color:var(--green);}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:top;}
+th{background:#f0ede3;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);}
+tr:last-child td{border-bottom:0;}
+.pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.pill.pending{background:#fbeecb;color:var(--amber);}.pill.confirmed,.pill.active{background:#e0f0e7;color:var(--green-d);}.pill.cancelled,.pill.expired{background:#eee;color:#888;}
+.pp{font-size:11px;color:var(--mute);}
+.btn{border:0;border-radius:5px;padding:6px 11px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;color:#fff;}
+.btn.confirm{background:var(--green);}.btn.cancel{background:#9a9a9a;}.btn.del{background:var(--red);}
+.btn+.btn{margin-left:5px;}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px;max-width:640px;}
+.card h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;}
+label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:10px 0 4px;}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.gobtn{background:var(--green);color:#fff;border:0;border-radius:6px;padding:11px 22px;font:inherit;font-weight:700;cursor:pointer;margin-top:16px;}
+.login{max-width:400px;margin:70px auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:30px;}
+.login h2{margin-bottom:6px;}.login p{color:var(--mute);font-size:13.5px;margin-bottom:16px;}
+.msg{margin-top:12px;font-size:13px;padding:9px 12px;border-radius:6px;display:none;}
+.msg.err{background:#f7e1dd;color:#a23b2c;display:block;}
+.blkrow{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:10px;max-width:640px;}
+.empty{color:var(--mute);padding:24px;text-align:center;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN GATE -->
+<div id="gate" class="login" style="display:none;">
+  <h2>Booking Admin</h2>
+  <p>Owner sign-in for The Barham Lakes.</p>
+  <label>Email</label><input id="g-email" type="email" placeholder="owner@thebarhamlakes.co.uk">
+  <label>Password</label><input id="g-pass" type="password" placeholder="••••••••">
+  <button class="gobtn" id="g-go" style="width:100%;">Sign in →</button>
+  <div class="msg" id="g-msg"></div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;">
+<header><div class="wrap">
+  <h1>🎣 Barham Lakes — Booking Admin</h1>
+  <span class="who" id="who">—</span>
+  <a class="out" id="signout">Sign out</a>
+</div></header>
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab active" data-p="bookings">Bookings</button>
+    <button class="tab" data-p="syndicate">Syndicate</button>
+    <button class="tab" data-p="blackout">Blackout dates</button>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div class="panel active" id="bookings">
+    <div class="stats" id="stats"></div>
+    <div class="filters" id="filters">
+      <button data-f="all" class="active">All</button>
+      <button data-f="pending">Pending</button>
+      <button data-f="confirmed">Confirmed</button>
+      <button data-f="cancelled">Cancelled</button>
+      <button data-f="upcoming">Upcoming</button>
+    </div>
+    <table><thead><tr><th>Dates</th><th>Water</th><th>Guest</th><th>Party</th><th>£</th><th>Status</th><th>Manage</th></tr></thead>
+      <tbody id="rows"></tbody></table>
+  </div>
+
+  <!-- SYNDICATE -->
+  <div class="panel" id="syndicate">
+    <div class="stats" id="synstats"></div>
+    <div class="filters" id="synfilters">
+      <button data-f="all" class="active">All</button>
+      <button data-f="pending">Pending</button>
+      <button data-f="active">Active</button>
+      <button data-f="expired">Expired</button>
+      <button data-f="cancelled">Cancelled</button>
+    </div>
+    <table><thead><tr><th>Member</th><th>Ticket</th><th>Year</th><th>£</th><th>Status</th><th>Manage</th></tr></thead>
+      <tbody id="synrows"></tbody></table>
+  </div>
+
+  <!-- BLACKOUT -->
+  <div class="panel" id="blackout">
+    <div class="card">
+      <h3>Block out dates (maintenance / private use)</h3>
+      <label>Water</label><select id="b-water"></select>
+      <div class="row">
+        <div><label>From (first night)</label><input id="b-in" type="date"></div>
+        <div><label>To (departure)</label><input id="b-out" type="date"></div>
+      </div>
+      <label>Reason (optional)</label><input id="b-reason" placeholder="e.g. Draining / restocking / private party">
+      <button class="gobtn" id="b-add">Add blackout →</button>
+      <div class="msg" id="b-msg"></div>
+    </div>
+    <h3 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin:6px 0;">Current blackouts</h3>
+    <div id="blk-list"></div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="booking-config.js"></script>
+<script>
+const sb = window.supabase.createClient(window.BARHAM_SUPABASE_URL, window.BARHAM_SUPABASE_ANON_KEY);
+const W = window.BARHAM_WATERS;
+const $ = id => document.getElementById(id);
+const money = window.BARHAM.money;
+let allBookings = [], filter='all';
+
+/* ---- gate ---- */
+async function boot(){
+  const { data } = await sb.auth.getSession();
+  if(!data.session){ showGate(); return; }
+  const { data:p } = await sb.from('profiles').select('role,full_name').eq('id',data.session.user.id).single();
+  if(!p || p.role!=='admin'){ showGate('That account is not an admin. Ask the site owner for access.'); await sb.auth.signOut(); return; }
+  $('gate').style.display='none'; $('app').style.display='block';
+  $('who').textContent = data.session.user.email;
+  fillWaters(); loadBookings(); loadBlackouts(); loadMemberships();
+}
+function showGate(err){ $('app').style.display='none'; $('gate').style.display='block'; if(err){ const m=$('g-msg'); m.textContent=err; m.className='msg err'; } }
+$('g-go').onclick=async ()=>{
+  const { error } = await sb.auth.signInWithPassword({ email:$('g-email').value.trim(), password:$('g-pass').value });
+  if(error){ const m=$('g-msg'); m.textContent=error.message; m.className='msg err'; return; }
+  boot();
+};
+$('signout').onclick=async ()=>{ await sb.auth.signOut(); location.reload(); };
+
+/* ---- tabs ---- */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); $(t.dataset.p).classList.add('active');
+});
+
+/* ---- bookings ---- */
+document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); filter=b.dataset.f; renderRows();
+});
+async function loadBookings(){
+  const { data } = await sb.from('bookings').select('*').order('check_in',{ascending:true});
+  allBookings = data||[]; renderStats(); renderRows();
+}
+function renderStats(){
+  const today=new Date().toISOString().slice(0,10);
+  const pend=allBookings.filter(b=>b.status==='pending').length;
+  const conf=allBookings.filter(b=>b.status==='confirmed');
+  const upcoming=conf.filter(b=>b.check_in>=today).length;
+  const revenue=conf.reduce((s,b)=>s+(b.price||0),0);
+  $('stats').innerHTML =
+    stat(pend,'Pending requests')+stat(conf.length,'Confirmed')+stat(upcoming,'Upcoming stays')+stat(money(revenue),'Confirmed revenue');
+}
+const stat=(n,l)=>`<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`;
+function renderRows(){
+  const today=new Date().toISOString().slice(0,10);
+  let list=allBookings.slice();
+  if(filter==='upcoming') list=list.filter(b=>b.status!=='cancelled'&&b.check_in>=today);
+  else if(filter!=='all') list=list.filter(b=>b.status===filter);
+  const rows=$('rows'); rows.innerHTML='';
+  if(!list.length){ rows.innerHTML='<tr><td colspan="7" class="empty">No bookings here yet.</td></tr>'; return; }
+  list.forEach(b=>{
+    const wn=W[b.water]?W[b.water].name:b.water;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${fmt(b.check_in)}<br><span class="pp">→ ${fmt(b.check_out)} · ${b.nights}n</span></td>
+      <td>${wn}</td>
+      <td>${esc(b.name||'')}<br><span class="pp">${esc(b.email||'')}${b.phone?' · '+esc(b.phone):''}</span></td>
+      <td>${b.anglers}</td>
+      <td>${money(b.price)}<br><span class="pp">dep ${b.payment_status==='deposit_paid'?'paid ✓':money(b.deposit)}</span></td>
+      <td><span class="pill ${b.status}">${b.status}</span></td>
+      <td id="act-${b.id}"></td>`;
+    rows.appendChild(tr);
+    const act=$('act-'+b.id);
+    if(b.status!=='confirmed'){ const c=mkBtn('Confirm','confirm',()=>setStatus(b.id,'confirmed')); act.appendChild(c); }
+    if(b.status!=='cancelled'){ const x=mkBtn('Cancel','cancel',()=>setStatus(b.id,'cancelled')); act.appendChild(x); }
+    const d=mkBtn('Delete','del',()=>del(b.id)); act.appendChild(d);
+  });
+}
+function mkBtn(t,cls,fn){ const b=document.createElement('button'); b.className='btn '+cls; b.textContent=t; b.onclick=fn; return b; }
+async function setStatus(id,status){
+  const { error } = await sb.from('bookings').update({status}).eq('id',id);
+  if(error){ alert(error.message); return; } loadBookings();
+}
+async function del(id){ if(!confirm('Delete this booking permanently?'))return;
+  const { error } = await sb.from('bookings').delete().eq('id',id);
+  if(error){ alert(error.message); return; } loadBookings();
+}
+
+/* ---- blackout ---- */
+function fillWaters(){ const s=$('b-water'); s.innerHTML=''; Object.entries(W).forEach(([k,w])=>{ const o=document.createElement('option'); o.value=k; o.textContent=w.name; s.appendChild(o); }); }
+$('b-add').onclick=async ()=>{
+  const water=$('b-water').value, ci=$('b-in').value, co=$('b-out').value, reason=$('b-reason').value.trim();
+  const m=$('b-msg');
+  if(!ci||!co||co<=ci){ m.textContent='Pick a valid date range (departure after arrival).'; m.className='msg err'; return; }
+  const { error } = await sb.from('blocked_dates').insert({water,check_in:ci,check_out:co,reason});
+  if(error){ m.textContent=error.message; m.className='msg err'; return; }
+  m.style.display='none'; $('b-in').value=$('b-out').value=$('b-reason').value=''; loadBlackouts();
+};
+async function loadBlackouts(){
+  const { data } = await sb.from('blocked_dates').select('*').order('check_in',{ascending:true});
+  const box=$('blk-list'); box.innerHTML='';
+  if(!data||!data.length){ box.innerHTML='<p class="empty" style="max-width:640px;">No blackout dates set.</p>'; return; }
+  data.forEach(b=>{
+    const wn=W[b.water]?W[b.water].name:b.water;
+    const el=document.createElement('div'); el.className='blkrow';
+    el.innerHTML=`<div><strong>${wn}</strong> · ${fmt(b.check_in)} → ${fmt(b.check_out)}${b.reason?' <span class="pp">('+esc(b.reason)+')</span>':''}</div>`;
+    const x=mkBtn('Remove','del',async ()=>{ await sb.from('blocked_dates').delete().eq('id',b.id); loadBlackouts(); });
+    el.appendChild(x); box.appendChild(el);
+  });
+}
+
+/* ---- syndicate memberships ---- */
+const TICK = window.BARHAM_TICKETS || {};
+let allMemb=[], synFilter='all';
+document.querySelectorAll('#synfilters button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#synfilters button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); synFilter=b.dataset.f; renderSyn();
+});
+async function loadMemberships(){
+  const { data } = await sb.from('memberships').select('*').order('applied_at',{ascending:false});
+  allMemb = data||[]; renderSynStats(); renderSyn();
+}
+function renderSynStats(){
+  const active=allMemb.filter(m=>m.status==='active');
+  const pend=allMemb.filter(m=>m.status==='pending').length;
+  const rev=active.reduce((s,m)=>s+(m.price||0),0);
+  $('synstats').innerHTML=stat(active.length,'Active members')+stat(pend,'Pending')+stat(allMemb.length,'Applications')+stat(money(rev),'Membership revenue');
+}
+function renderSyn(){
+  let list=allMemb.slice();
+  if(synFilter!=='all') list=list.filter(m=>m.status===synFilter);
+  const rows=$('synrows'); rows.innerHTML='';
+  if(!list.length){ rows.innerHTML='<tr><td colspan="6" class="empty">Nothing here yet.</td></tr>'; return; }
+  list.forEach(m=>{
+    const tn=TICK[m.ticket]?TICK[m.ticket].name:m.ticket;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${esc(m.name||'')}<br><span class="pp">${esc(m.email||'')}${m.phone?' · '+esc(m.phone):''}</span>${m.fishing_history?'<br><span class="pp">“'+esc(m.fishing_history).slice(0,90)+'”</span>':''}</td>
+      <td>${tn}</td><td>${m.season_year}</td>
+      <td>${money(m.price)}<br><span class="pp">${m.payment_status==='paid'?'paid ✓':'unpaid'}</span></td>
+      <td><span class="pill ${m.status}">${m.status}</span></td>
+      <td id="synact-${m.id}"></td>`;
+    rows.appendChild(tr);
+    const act=$('synact-'+m.id);
+    if(m.status!=='active')    act.appendChild(mkBtn('Activate','confirm',()=>setMemb(m.id,'active')));
+    if(m.status!=='cancelled') act.appendChild(mkBtn('Cancel','cancel',()=>setMemb(m.id,'cancelled')));
+    act.appendChild(mkBtn('Delete','del',()=>delMemb(m.id)));
+  });
+}
+async function setMemb(id,status){ const {error}=await sb.from('memberships').update({status}).eq('id',id); if(error){alert(error.message);return;} loadMemberships(); }
+async function delMemb(id){ if(!confirm('Delete this application permanently?'))return; const {error}=await sb.from('memberships').delete().eq('id',id); if(error){alert(error.message);return;} loadMemberships(); }
+
+function fmt(s){ return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+function esc(s){ return (s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c])); }
+boot();
+</script>
+</body>
+</html>

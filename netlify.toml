@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # bundle these npm packages into the functions
+  external_node_modules = ["stripe", "@supabase/supabase-js"]
+
+# Stripe's webhook needs the raw body — don't let anything rewrite it.
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

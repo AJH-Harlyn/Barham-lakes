@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Barham Lakes — concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12140e;        /* near-black, warm */
+  --bg2:#1a1d14;
+  --panel:#20241a;
+  --cream:#f2eee2;
+  --cream2:#e7e1d1;
+  --green:#9bad57;      /* brand green, brightened for dark bg */
+  --green-d:#71803c;
+  --brass:#9bad57;      /* accent now unified to brand green */
+  --brass-d:#71803c;
+  --ink:#20221a;
+  --muted:#9a9c8c;
+  --muted-d:#6b6d5f;
+  --line:rgba(242,238,226,.14);
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',system-ui,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
+.serif{font-family:var(--serif);}
+.label{font-size:12px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--green);}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.02em;padding:14px 28px;border-radius:2px;cursor:pointer;border:1.5px solid transparent;transition:.25s;}
+.btn-brass{background:var(--brass);color:#1a140a;}
+.btn-brass:hover{background:var(--brass-d);}
+.btn-line{border-color:rgba(242,238,226,.4);color:var(--cream);}
+.btn-line:hover{background:var(--cream);color:var(--ink);}
+.btn-green{background:var(--green);color:#181a10;}
+.btn-green:hover{background:var(--green-d);}
+
+/* contour motif */
+.contour{position:absolute;pointer-events:none;opacity:.5;}
+
+/* TOP BAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;transition:.3s;}
+.topbar.scrolled{background:rgba(18,20,14,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.tb-inner{display:flex;align-items:center;justify-content:space-between;height:84px;}
+.logo{display:flex;align-items:center;gap:13px;}
+.logo img{height:48px;background:#f2eee2;border-radius:8px;padding:4px;}
+.logo .lt{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.02em;line-height:1;}
+.logo .lt small{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.32em;color:var(--muted);margin-top:4px;font-weight:600;}
+.menu{display:flex;gap:32px;align-items:center;}
+.menu a{font-size:14px;font-weight:500;color:#d9d5c6;transition:.2s;}
+.menu a:hover{color:var(--brass);}
+.tb-cta{display:flex;align-items:center;gap:18px;}
+.tb-cta .mem{font-size:13px;color:var(--muted);}
+.burger{display:none;background:none;border:0;color:var(--cream);font-size:26px;cursor:pointer;}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;}
+.hero-slides{position:absolute;inset:0;}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.6s ease;}
+.slide.active{opacity:1;animation:kenburns 8s ease forwards;}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1)}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,20,14,.72) 0%,rgba(18,20,14,.28) 40%,rgba(18,20,14,.92) 100%);}
+.hero-dots{position:absolute;right:34px;bottom:120px;z-index:3;display:flex;flex-direction:column;gap:12px;}
+.hero-dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(242,238,226,.35);cursor:pointer;padding:0;transition:.3s;}
+.hero-dots button.on{background:var(--brass);transform:scale(1.3);}
+.hero-rail{position:absolute;left:34px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:rgba(242,238,226,.55);font-weight:600;}
+.hero-inner{position:relative;z-index:2;padding-bottom:64px;width:100%;}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(44px,7vw,104px);line-height:.98;letter-spacing:-.02em;max-width:16ch;margin:18px 0 22px;}
+.hero h1 em{font-style:italic;color:var(--brass);}
+.hero .lede{font-size:19px;color:#e3dfd0;max-width:52ch;margin-bottom:30px;}
+.hero .acts{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-meta{display:flex;gap:44px;margin-top:52px;padding-top:26px;border-top:1px solid var(--line);}
+.hero-meta .m .n{font-family:var(--serif);font-size:30px;line-height:1;}
+.hero-meta .m .l{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:7px;}
+.scrollcue{position:absolute;right:34px;bottom:64px;z-index:2;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,238,226,.5);writing-mode:vertical-rl;}
+
+/* BOOKING STRIP */
+.book{background:var(--brass);color:#1a140a;}
+.book-inner{display:grid;grid-template-columns:auto 1fr 1fr 1fr auto;gap:0;align-items:center;padding:20px 0;}
+.book .bt{font-family:var(--serif);font-size:18px;font-weight:600;padding-right:30px;border-right:1px solid rgba(26,20,10,.2);}
+.book .f{padding:0 22px;border-right:1px solid rgba(26,20,10,.2);}
+.book .f label{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;opacity:.7;margin-bottom:3px;}
+.book .f select,.book .f input{width:100%;background:transparent;border:0;font-family:var(--sans);font-size:15px;font-weight:600;color:#1a140a;outline:none;}
+.book .go{padding-left:22px;}
+.book .go .btn{background:#1a140a;color:var(--cream);}
+.availbar{background:#181207;color:#f0e6d3;font-size:14px;text-align:center;padding:12px;display:none;}
+
+/* SECTION SHELL */
+section{position:relative;}
+.pad{padding:120px 0;}
+.head{max-width:760px;margin-bottom:60px;}
+.head h2{font-family:var(--serif);font-weight:500;font-size:clamp(32px,4.4vw,54px);line-height:1.02;letter-spacing:-.02em;margin:16px 0 18px;}
+.head p{font-size:18px;color:var(--muted);}
+.cream-sec{background:var(--cream);color:var(--ink);}
+.cream-sec .label{color:var(--green-d);}
+.cream-sec .head p{color:#5c5e4f;}
+
+/* STATS band */
+.stats{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;}
+.stats .contour{right:-80px;top:-120px;}
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);}
+.stat{padding:56px 24px;text-align:center;border-right:1px solid var(--line);}
+.stat:last-child{border-right:0;}
+.stat .n{font-family:var(--serif);font-size:clamp(36px,4vw,56px);line-height:1;color:var(--cream);}
+.stat .n em{font-style:normal;color:var(--brass);}
+.stat .l{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:12px;}
+
+/* LAKE SELECTOR */
+.lakes-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:38px;border-bottom:1px solid rgba(32,34,26,.14);}
+.lakes-tabs button{background:none;border:0;font-family:var(--serif);font-size:22px;color:#a9ab98;padding:10px 22px 16px;cursor:pointer;position:relative;transition:.2s;}
+.cream-sec .lakes-tabs button{color:#9a9c86;}
+.lakes-tabs button.active{color:var(--ink);}
+.lakes-tabs button.active::after{content:"";position:absolute;left:22px;right:22px;bottom:-1px;height:3px;background:var(--green);}
+.lake-panel{display:grid;grid-template-columns:1.15fr 1fr;gap:0;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 30px 60px rgba(20,20,10,.12);}
+.lake-panel .img{min-height:460px;background-size:cover;background-position:center;transition:.4s;}
+.lake-panel .info{padding:52px 54px;}
+.lake-panel .info h3{font-family:var(--serif);font-size:38px;font-weight:500;margin:10px 0 8px;color:var(--ink);}
+.lake-panel .info .desc{font-size:16px;color:#55574a;margin-bottom:26px;}
+.lake-stats{display:flex;gap:38px;margin-bottom:30px;}
+.lake-stats .ls .n{font-family:var(--serif);font-size:30px;color:var(--green-d);}
+.lake-stats .ls .l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a8c7c;margin-top:4px;}
+
+/* LODGE */
+.lodge{background:var(--bg);overflow:hidden;}
+.lodge .contour{left:-100px;bottom:-140px;opacity:.35;}
+.lodge-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:70px;}
+.lodge-img{position:relative;}
+.lodge-img .main{height:560px;background:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG-20220209-WA0001.jpg') center/cover;border-radius:6px;}
+.lodge-img .badge{position:absolute;top:24px;left:-16px;background:var(--brass);color:#1a140a;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:10px 18px;border-radius:2px;}
+.lodge h2{font-family:var(--serif);font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.03;margin:14px 0 18px;}
+.lodge h2 em{font-style:italic;color:var(--brass);}
+.lodge .lede{font-size:17px;color:#cdcabb;margin-bottom:28px;max-width:46ch;}
+.lfeat{display:grid;grid-template-columns:1fr 1fr;gap:12px 26px;margin-bottom:32px;}
+.lfeat div{font-size:14.5px;color:#e0dccd;padding-left:22px;position:relative;}
+.lfeat div::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;background:var(--brass);border-radius:50%;}
+.lprice{display:flex;align-items:baseline;gap:12px;margin-bottom:28px;}
+.lprice .from{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.lprice .amt{font-family:var(--serif);font-size:44px;color:var(--cream);}
+
+/* SYNDICATE tickets */
+.tickets{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(32,34,26,.12);border-radius:6px;overflow:hidden;background:#fff;}
+.tk{padding:44px 36px;border-right:1px solid rgba(32,34,26,.12);position:relative;}
+.tk:last-child{border-right:0;}
+.tk.feat{background:var(--ink);color:var(--cream);}
+.tk .name{font-family:var(--serif);font-size:26px;margin-bottom:6px;color:var(--ink);}
+.tk.feat .name{color:var(--cream);}
+.tk .scope{font-size:13.5px;color:#6d6f5f;min-height:44px;margin-bottom:20px;}
+.tk.feat .scope{color:#c7c8b8;}
+.tk .pr{font-family:var(--serif);font-size:30px;color:var(--green-d);margin-bottom:2px;}
+.tk.feat .pr{color:var(--brass);}
+.tk .per{font-size:12px;color:#8a8c7c;text-transform:uppercase;letter-spacing:.14em;margin-bottom:24px;}
+.tk .flag{position:absolute;top:16px;right:16px;background:var(--brass);color:#1a140a;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+
+/* JOURNAL */
+.journal{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;}
+.entry{cursor:pointer;}
+.entry .ph{height:300px;background-size:cover;background-position:center;border-radius:5px;margin-bottom:18px;transition:.35s;filter:grayscale(.1);}
+.entry:hover .ph{transform:translateY(-6px);filter:grayscale(0);}
+.entry .date{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);}
+.entry h3{font-family:var(--serif);font-size:23px;font-weight:500;margin:8px 0 6px;line-height:1.15;}
+.entry p{font-size:14px;color:var(--muted);}
+
+/* SOCIAL */
+.ig{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:44px;}
+.ig div{aspect-ratio:1/1;background-size:cover;background-position:center;border-radius:3px;}
+
+/* CTA */
+.cta{position:relative;text-align:center;overflow:hidden;padding:150px 0;background:linear-gradient(180deg,rgba(18,20,14,.7),rgba(18,20,14,.85)),url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/DSC00998-1024x683.jpg') center/cover fixed;}
+.cta h2{font-family:var(--serif);font-weight:500;font-size:clamp(34px,5vw,64px);line-height:1.02;max-width:18ch;margin:16px auto 22px;}
+.cta p{font-size:18px;color:#d9d5c6;max-width:52ch;margin:0 auto 30px;}
+
+/* FOOTER */
+footer{background:#0d0f09;border-top:1px solid var(--line);padding:80px 0 32px;color:#a6a798;}
+.ft-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px;}
+.ft h4{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--cream);margin-bottom:18px;}
+.ft a{display:block;margin-bottom:10px;font-size:14px;color:#a6a798;}
+.ft a:hover{color:var(--brass);}
+.ft .logo img{margin-bottom:16px;}
+.ft-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted-d);}
+.mockbar{background:var(--ink);color:var(--brass);text-align:center;font-size:12px;letter-spacing:.06em;padding:8px;border-bottom:1px solid var(--line);}
+
+@media(max-width:960px){
+  .menu,.tb-cta .mem{display:none;}
+  .burger{display:block;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat:nth-child(2){border-right:0;}
+  .lake-panel,.lodge-grid{grid-template-columns:1fr;}
+  .lake-panel .img{min-height:260px;}
+  .lodge-img .main{height:340px;}
+  .tickets,.journal,.ig{grid-template-columns:1fr;}
+  .ig{grid-template-columns:repeat(3,1fr);}
+  .ft-top{grid-template-columns:1fr 1fr;}
+  .cta{background-attachment:scroll;}
+}
+</style>
+</head>
+<body>
+
+<div class="mockbar">Concept mockup for The Barham Lakes — by AJH Technology · placeholder pricing &amp; sample copy</div>
+
+<!-- TOP BAR -->
+<div class="topbar" id="topbar">
+  <div class="wrap tb-inner">
+    <a class="logo" href="#top">
+      <img src="https://thebarhamlakes.co.uk/wp-content/uploads/2021/05/The_Barham_Lakes_v3_LR.png" alt="The Barham Lakes">
+      <span class="lt">The Barham Lakes<small>EST. 2018 · SUFFOLK</small></span>
+    </a>
+    <nav class="menu">
+      <a href="#lakes">The Water</a>
+      <a href="#lodge">The Lodge</a>
+      <a href="#syndicate">Syndicate</a>
+      <a href="#journal">Catch Journal</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="tb-cta">
+      <a class="mem" href="#">Members ▸</a>
+      <a class="btn btn-brass" href="#book">Book the Lodge</a>
+    </div>
+    <button class="burger" onclick="var m=document.getElementById('mob');m.style.display=m.style.display==='block'?'none':'block'">☰</button>
+  </div>
+  <div id="mob" style="display:none;background:var(--bg2);border-top:1px solid var(--line);">
+    <div class="wrap" style="padding:14px 32px;">
+      <a href="#lakes" style="display:block;padding:9px 0;">The Water</a>
+      <a href="#lodge" style="display:block;padding:9px 0;">The Lodge</a>
+      <a href="#syndicate" style="display:block;padding:9px 0;">Syndicate</a>
+      <a href="#journal" style="display:block;padding:9px 0;">Catch Journal</a>
+      <a href="#visit" style="display:block;padding:9px 0;">Visit</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-slides" id="slides">
+    <div class="slide active" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2021/05/20180809_103607.jpeg')"></div>
+    <div class="slide" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2021/05/IMG-20180821-WA0043-2-1.png')"></div>
+    <div class="slide" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2021/05/P1010493.jpeg')"></div>
+    <div class="slide" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/DSC02786-scaled.jpg')"></div>
+    <div class="slide" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2021/05/P1010481.jpeg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-dots" id="dots"></div>
+  <div class="hero-rail">The whole lake to yourself</div>
+  <div class="scrollcue">Scroll</div>
+  <div class="wrap hero-inner">
+    <span class="label">Exclusive angling &amp; a lakeside lodge · Suffolk</span>
+    <h1>Specimen fishing,<br>designed by anglers <em>for anglers</em>.</h1>
+    <p class="lede">Thirty-one acres of otter-fenced water across four lakes and a private river — now with a luxury lodge on the bank, exclusive to your booking.</p>
+    <div class="acts">
+      <a class="btn btn-brass" href="#book">Check lodge availability</a>
+      <a class="btn btn-line" href="#syndicate">Join the syndicate</a>
+    </div>
+    <div class="hero-meta">
+      <div class="m"><div class="n serif">31</div><div class="l">Acres of water</div></div>
+      <div class="m"><div class="n serif">4</div><div class="l">Lakes + river</div></div>
+      <div class="m"><div class="n serif">50<span style="font-size:16px">lb+</span></div><div class="l">Lake record</div></div>
+      <div class="m"><div class="n serif">3<span style="font-size:16px">km</span></div><div class="l">Otter fencing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<div class="book" id="book">
+  <div class="wrap book-inner">
+    <div class="bt">Check availability</div>
+    <div class="f"><label>Water</label>
+      <select><option>Brook Pool + Lodge</option><option>Baileys Creek</option><option>Leia Lagoon</option><option>Blake Quarry</option></select></div>
+    <div class="f"><label>Arrive</label><input type="date" value="2026-08-14"></div>
+    <div class="f"><label>Depart</label><input type="date" value="2026-08-17"></div>
+    <div class="go"><a class="btn" onclick="document.getElementById('ab').style.display='block'">Search</a></div>
+  </div>
+  <div class="availbar" id="ab">✓ Brook Pool + Lodge is free for 14–17 Aug — 3 nights from <strong>£950</strong>. A 30% deposit secures it.</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <svg class="contour" width="440" height="440" viewBox="0 0 440 440" fill="none" stroke="#9bad57" stroke-width="1">
+    <ellipse cx="220" cy="220" rx="60" ry="44"/><ellipse cx="220" cy="220" rx="110" ry="82"/>
+    <ellipse cx="220" cy="220" rx="160" ry="120"/><ellipse cx="220" cy="220" rx="210" ry="158"/>
+  </svg>
+  <div class="wrap"><div class="stats-grid">
+    <div class="stat"><div class="n serif">31<em>ac</em></div><div class="l">Of water</div></div>
+    <div class="stat"><div class="n serif">150+</div><div class="l">Specimen carp</div></div>
+    <div class="stat"><div class="n serif">50<em>lb</em></div><div class="l">Lake record</div></div>
+    <div class="stat"><div class="n serif">20+</div><div class="l">Islands</div></div>
+    <div class="stat"><div class="n serif">1000<em>m</em></div><div class="l">Private river</div></div>
+  </div></div>
+</div>
+
+<!-- LAKES -->
+<section class="cream-sec pad" id="lakes">
+  <div class="wrap">
+    <div class="head">
+      <span class="label">The Water</span>
+      <h2>Four lakes and a private river, each with its own character.</h2>
+      <p>Mature gravel pits shaped by islands, bays, plateaus and colossal gravel bars — pick your water below.</p>
+    </div>
+    <div class="lakes-tabs" id="tabs">
+      <button class="active" data-k="brook">Brook Pool</button>
+      <button data-k="baileys">Baileys Creek</button>
+      <button data-k="leia">Leia Lagoon</button>
+      <button data-k="blake">Blake Quarry</button>
+      <button data-k="river">The River</button>
+    </div>
+    <div class="lake-panel">
+      <div class="img" id="lkimg" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG-20220209-WA0001.jpg')"></div>
+      <div class="info">
+        <span class="label" id="lktag">Exclusive hire · with the lodge</span>
+        <h3 id="lkname">Brook Pool</h3>
+        <p class="desc" id="lkdesc">An 8-acre tree and reed-lined gravel pit with one island and an abundance of underwater features. Depths to 16ft, old Gipping-valley carp and real targets — booked exclusively, with the lodge included.</p>
+        <div class="lake-stats" id="lkstats"></div>
+        <a class="btn btn-green" id="lkcta" href="#book">Book exclusively</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LODGE -->
+<section class="lodge pad" id="lodge">
+  <svg class="contour" width="520" height="520" viewBox="0 0 440 440" fill="none" stroke="#9bad57" stroke-width="1">
+    <ellipse cx="220" cy="220" rx="60" ry="44"/><ellipse cx="220" cy="220" rx="120" ry="90"/>
+    <ellipse cx="220" cy="220" rx="180" ry="134"/><ellipse cx="220" cy="220" rx="240" ry="178"/>
+  </svg>
+  <div class="wrap lodge-grid">
+    <div class="lodge-img">
+      <div class="badge">New for 2026</div>
+      <div class="main"></div>
+    </div>
+    <div>
+      <span class="label" style="color:var(--brass)">The Brook Pool Lodge</span>
+      <h2>Fish through the night. <em>Wake on the water.</em></h2>
+      <p class="lede">Suffolk brick and live-edge timber, bifold doors opening onto a covered deck over the lake. Warm up by the log burner between bites — the lodge comes exclusive with every Brook Pool booking.</p>
+      <div class="lfeat">
+        <div>Sleeps up to 8 anglers</div><div>Central log burner</div>
+        <div>Big-screen living area</div><div>Full kitchen &amp; dining</div>
+        <div>Toilet &amp; hot shower</div><div>Superfast internet</div>
+        <div>Covered lakeside deck</div><div>Private secure parking</div>
+      </div>
+      <div class="lprice"><span class="from">From</span><span class="amt serif">£950</span><span class="from">/ 3-night exclusive</span></div>
+      <a class="btn btn-brass" href="#book">Check dates &amp; book</a>
+    </div>
+  </div>
+</section>
+
+<!-- SYNDICATE -->
+<section class="cream-sec pad" id="syndicate">
+  <div class="wrap">
+    <div class="head">
+      <span class="label">Membership</span>
+      <h2>Join the Barham syndicate.</h2>
+      <p>Limited tickets — apply, pay and renew online. Choose your water and level of access.</p>
+    </div>
+    <div class="tickets">
+      <div class="tk">
+        <div class="name">Specimen Carp</div>
+        <div class="scope">Baileys Creek, Leia Lagoon &amp; Blake Quarry — all year round.</div>
+        <div class="pr serif">£POA</div><div class="per">Annual ticket</div>
+        <a class="btn btn-green" href="#">Apply online</a>
+      </div>
+      <div class="tk feat">
+        <span class="flag">Most access</span>
+        <div class="name">Complete Complex</div>
+        <div class="scope">Every lake and the river, all year — the full Barham experience.</div>
+        <div class="pr serif">£POA</div><div class="per">Annual ticket</div>
+        <a class="btn btn-brass" href="#">Apply online</a>
+      </div>
+      <div class="tk">
+        <div class="name">Specimen Pike</div>
+        <div class="scope">Baileys Creek, Leia Lagoon &amp; Blake Quarry — seasonal.</div>
+        <div class="pr serif">£POA</div><div class="per">Seasonal ticket</div>
+        <a class="btn btn-green" href="#">Apply online</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="pad" id="journal">
+  <div class="wrap">
+    <div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;max-width:none;">
+      <div style="max-width:640px;">
+        <span class="label">Live from the bank</span>
+        <h2>The catch journal.</h2>
+      </div>
+      <a class="btn btn-line" href="https://www.instagram.com/thebarhamlakes/" target="_blank">Follow @thebarhamlakes</a>
+    </div>
+    <div class="journal">
+      <article class="entry">
+        <div class="ph" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG_20221127_141238_446.jpg')"></div>
+        <div class="date">Recent capture</div>
+        <h3>The C-Scale at 35lb+</h3>
+        <p>A new season, a new game plan — one of the target fish off the top in the first session back.</p>
+      </article>
+      <article class="entry">
+        <div class="ph" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/DSC_1660-scaled.jpg')"></div>
+        <div class="date">Match day</div>
+        <h3>Barrell Memorial raises £4,010</h3>
+        <p>Our annual charity match brought the whole complex together for two great causes.</p>
+      </article>
+      <article class="entry">
+        <div class="ph" style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/DSC00998-1024x683.jpg')"></div>
+        <div class="date">The Peach</div>
+        <h3>A mid-thirty off the A-team water</h3>
+        <p>Biggest of the bunch at the weekend — the growth rates on the complex keep telling.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL STRIP -->
+<section class="cream-sec" style="padding:70px 0;">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <span class="label">@thebarhamlakes</span>
+    </div>
+    <div class="ig">
+      <div style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG_20221127_141238_446.jpg')"></div>
+      <div style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/DSC_1660-scaled.jpg')"></div>
+      <div style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/DSC00998-1024x683.jpg')"></div>
+      <div style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG-20220209-WA0002.jpg')"></div>
+      <div style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG-20220209-WA0001.jpg')"></div>
+      <div style="background-image:url('https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/IMG_20230116_174206_165-1024x683.webp')"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <span class="label" style="color:var(--brass)">Your season starts here</span>
+    <h2>Ready for the whole lake to yourself?</h2>
+    <p>Check live availability for Brook Pool and the lodge, or apply to join the syndicate today.</p>
+    <a class="btn btn-brass" href="#book">Check availability</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="visit">
+  <div class="wrap">
+    <div class="ft-top">
+      <div>
+        <a class="logo" href="#top"><img src="https://thebarhamlakes.co.uk/wp-content/uploads/2021/05/The_Barham_Lakes_v3_LR.png" alt="The Barham Lakes" style="height:56px;"></a>
+        <p style="max-width:280px;font-size:14px;color:#8f9082;">Exclusive carp &amp; pike fishing and a luxury lakeside lodge in the heart of Suffolk. Viewing by appointment only.</p>
+      </div>
+      <div class="ft"><h4>Explore</h4><a href="#lakes">The Water</a><a href="#lodge">The Lodge</a><a href="#syndicate">Syndicate</a><a href="#journal">Catch Journal</a></div>
+      <div class="ft"><h4>Book</h4><a href="#book">Lodge availability</a><a href="#">Members login</a><a href="#">Gift a session</a><a href="#">Cancellations</a></div>
+      <div class="ft"><h4>Find us</h4><a href="#">Pesthouse Lane, Barham</a><a href="#">Ipswich, Suffolk, IP6 0PF</a><a href="https://www.instagram.com/thebarhamlakes/">Instagram</a><a href="https://www.facebook.com/BarhamFishing/">Facebook</a></div>
+    </div>
+    <div class="ft-bottom">
+      <span>© The Barham Lakes 2026 — All rights reserved</span>
+      <span>Concept design by AJH Technology · ajhtechnology.digital</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// sticky header state
+var tb=document.getElementById('topbar');
+addEventListener('scroll',function(){tb.classList.toggle('scrolled',scrollY>40);});
+// lake selector
+var LAKES={
+  brook:{name:"Brook Pool",tag:"Exclusive hire · with the lodge",img:"IMG-20220209-WA0001.jpg",
+    desc:"An 8-acre tree and reed-lined gravel pit with one island and an abundance of underwater features. Depths to 16ft, old Gipping-valley carp and real targets — booked exclusively, with the lodge included.",
+    stats:[["8ac","Surface"],["16ft","Max depth"],["150","Stock"]],cta:"Book exclusively"},
+  baileys:{name:"Baileys Creek",tag:"Syndicate water",img:"DSC_1660-scaled.jpg",
+    desc:"Varied specimen stock including the increasingly rare crucian carp — round, golden and hard-won. A characterful syndicate water of bays and features.",
+    stats:[["Syndicate","Access"],["Crucians","Rare stock"],["All year","Ticket"]],cta:"Syndicate access"},
+  leia:{name:"Leia Lagoon",tag:"Syndicate water",img:"DSC00998-1024x683.jpg",
+    desc:"Tranquil and tree-lined, surrounded by mature trees, reeds and gravel bars with a variety of depths and endless quiet spots to fish.",
+    stats:[["Syndicate","Access"],["Islands","Features"],["All year","Ticket"]],cta:"Syndicate access"},
+  blake:{name:"Blake Quarry",tag:"Syndicate water",img:"IMG_20221127_141238_446.jpg",
+    desc:"A former gravel pit turned specimen water — plateaus, bars and bays giving anglers of every level a choice of tranquil spots.",
+    stats:[["Syndicate","Access"],["Specimen","Carp & pike"],["All year","Ticket"]],cta:"Syndicate access"},
+  river:{name:"The River",tag:"Included with Complete Complex",img:"IMG-20220209-WA0002.jpg",
+    desc:"1,000 metres of private river fishing — secure, secluded and a different challenge entirely, included with the Complete Complex ticket.",
+    stats:[["1000m","Private"],["Wild","Fishing"],["Complex","Ticket"]],cta:"Join the syndicate"}
+};
+var BASE="https://thebarhamlakes.co.uk/wp-content/uploads/2023/01/";
+document.getElementById('tabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  var d=LAKES[b.dataset.k];
+  document.getElementById('lkimg').style.backgroundImage="url('"+BASE+d.img+"')";
+  document.getElementById('lkname').textContent=d.name;
+  document.getElementById('lktag').textContent=d.tag;
+  document.getElementById('lkdesc').textContent=d.desc;
+  document.getElementById('lkcta').textContent=d.cta;
+  document.getElementById('lkstats').innerHTML=d.stats.map(s=>'<div class="ls"><div class="n serif">'+s[0]+'</div><div class="l">'+s[1]+'</div></div>').join('');
+});
+// init stats
+document.getElementById('tabs').querySelector('button').click();
+
+// hero carousel
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('#slides .slide'));
+  var dotWrap=document.getElementById('dots'), i=0, timer;
+  slides.forEach(function(_,k){
+    var b=document.createElement('button');
+    if(k===0)b.className='on';
+    b.onclick=function(){go(k);reset();};
+    dotWrap.appendChild(b);
+  });
+  var dots=[].slice.call(dotWrap.children);
+  function go(n){
+    slides[i].classList.remove('active');dots[i].classList.remove('on');
+    i=(n+slides.length)%slides.length;
+    slides[i].classList.add('active');dots[i].classList.add('on');
+  }
+  function reset(){clearInterval(timer);timer=setInterval(function(){go(i+1);},5500);}
+  reset();
+})();
+</script>
+</body>
+</html>
