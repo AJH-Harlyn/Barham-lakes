@@ -26,7 +26,7 @@
   var session = null, profile = null;
 
   // ---- helpers ----
-  function iso(d){var x=new Date(d);x.setHours(0,0,0,0);return x.toISOString().slice(0,10);}
+  function iso(d){var x=new Date(d);return x.getFullYear()+'-'+('0'+(x.getMonth()+1)).slice(-2)+'-'+('0'+x.getDate()).slice(-2);} // local date (no UTC shift)
   function addDays(s,n){var x=new Date(s+'T00:00:00');x.setDate(x.getDate()+n);return iso(x);}
   function nightsBetween(a,b){return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000);}
   function money(n){return '£'+Number(n).toLocaleString('en-GB');}
