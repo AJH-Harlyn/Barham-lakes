@@ -37,7 +37,7 @@ input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6p
 <body>
 <header class="nav"><div class="nav-in">
   <a href="index.html" style="text-decoration:none;"><span class="brand">The Barham Lakes<small>EST. 2018 · SUFFOLK</small></span></a>
-  <nav style="display:flex;gap:20px;"><a href="index.html">Home</a><a href="bookings.html">Book</a><a href="syndicate.html">Syndicate</a></nav>
+  <nav style="display:flex;gap:20px;"><a href="index.html">Home</a><a href="bookings.html">Book</a><a href="syndicate.html">Syndicate</a><a href="about.html">About</a></nav>
 </div></header>
 
 <div class="wrap">
@@ -81,9 +81,10 @@ $('a-go').onclick=async ()=>{
   if(!email||!pass){ msg('Enter your email and password.'); return; }
   $('a-go').disabled=true;
   if(mode==='up'){
-    const { error } = await sb.auth.signUp({ email, password:pass, options:{ data:{ full_name:$('a-name').value.trim() } } });
+    const { data, error } = await sb.auth.signUp({ email, password:pass, options:{ data:{ full_name:$('a-name').value.trim() } } });
     $('a-go').disabled=false;
     if(error){ msg(error.message); return; }
+    if(data && data.session){ showAccount(); return; }   // signed in immediately (no email confirmation)
     msg('Account created — check your email to verify, then sign in.','ok'); setMode('in');
   } else {
     const { error } = await sb.auth.signInWithPassword({ email, password:pass });
