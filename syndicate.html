@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join the Syndicate — The Barham Lakes</title>
+<style>
+:root{--green:#1f6f54;--green-d:#164f3d;--ink:#1b1d18;--mute:#6b6d63;--line:#e3e0d6;--cream:#f6f3ea;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55;}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px;}
+header.nav{background:var(--ink);color:#fff;}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1180px;margin:0 auto;padding:0 22px;}
+.brand{font-weight:700;font-size:17px;}.brand small{display:block;font-size:9px;letter-spacing:.28em;color:#b9bcae;}
+.nav-in a{color:#e7e4d7;text-decoration:none;font-size:14px;}
+.nav-in a#nav-account{background:var(--green);color:#fff;padding:8px 14px;border-radius:4px;}
+.head{padding:34px 0 6px;}.head h1{font-size:30px;}.head p{color:var(--mute);max-width:640px;}
+.banner{background:#eef5f1;border:1px solid #bcdfcd;color:var(--green-d);padding:12px 16px;border-radius:8px;margin:16px 0;font-size:14px;display:none;}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 40px;}
+.tier{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 22px;display:flex;flex-direction:column;position:relative;}
+.tier.feat{border:2px solid var(--green);}
+.tier .flag{position:absolute;top:-11px;left:22px;background:var(--green);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:20px;}
+.tier h3{font-size:21px;margin-bottom:4px;}
+.tier .scope{font-size:13.5px;color:var(--mute);min-height:60px;}
+.tier .price{font-size:30px;font-weight:800;color:var(--green);margin:14px 0 2px;}
+.tier .term{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;}
+.tier button{margin-top:auto;background:var(--green);color:#fff;border:0;border-radius:6px;padding:11px;font:inherit;font-weight:700;cursor:pointer;}
+.tier button:hover{background:var(--green-d);}
+.tier.feat button{background:var(--ink);}
+.status{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0 0 24px;display:none;}
+.pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:20px;}
+.pill.active{background:#e0f0e7;color:var(--green-d);}.pill.pending{background:#fbeecb;color:#8a6d18;}.pill.expired,.pill.cancelled{background:#eee;color:#888;}
+/* modal */
+.mb{position:fixed;inset:0;background:rgba(20,22,16,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:40;}
+.mb.open{display:flex;}
+.modal{background:#fff;border-radius:14px;max-width:480px;width:100%;padding:26px;max-height:90vh;overflow:auto;}
+.modal h3{font-size:22px;margin-bottom:2px;}.modal .m-price{color:var(--green);font-weight:800;font-size:20px;margin-bottom:14px;}
+label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin:12px 0 4px;}
+input,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font:inherit;}
+.cta{display:block;width:100%;text-align:center;background:var(--green);color:#fff;border:0;border-radius:6px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;margin-top:18px;text-decoration:none;}
+.cta:hover{background:var(--green-d);}
+.authbox{background:var(--cream);border:1px dashed var(--line);border-radius:8px;padding:16px;text-align:center;font-size:13.5px;color:var(--mute);}
+.muted{color:var(--mute);font-size:12px;margin-top:10px;line-height:1.5;}
+.mclose{float:right;background:none;border:0;font-size:20px;cursor:pointer;color:var(--mute);}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:50;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}.toast.error{background:#b3392b;}
+@media(max-width:800px){.tiers{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-in">
+  <a href="index.html" style="text-decoration:none;"><span class="brand">The Barham Lakes<small>EST. 2018 · SUFFOLK</small></span></a>
+  <nav style="display:flex;gap:20px;align-items:center;">
+    <a href="index.html">Home</a><a href="bookings.html">Book</a><a href="syndicate.html">Syndicate</a>
+    <a id="nav-account" href="account.html">Sign in</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <div class="head">
+    <h1>Join the Barham syndicate</h1>
+    <p>Limited tickets — apply, pay and get set up online. Choose your water and level of access below.</p>
+  </div>
+  <div class="banner" id="paid-banner">✓ Payment received — welcome to the syndicate. Your membership is active. See it in <a href="account.html">My Account</a>.</div>
+  <div class="status" id="my-status"></div>
+  <div class="tiers" id="tiers"></div>
+</div>
+
+<!-- apply modal -->
+<div class="mb" id="modal"><div class="modal">
+  <button class="mclose" id="m-close">✕</button>
+  <h3 id="m-name">—</h3>
+  <div class="m-price" id="m-price">—</div>
+  <div id="m-auth" class="authbox" style="display:none;">
+    You’ll need a free account to apply.<br><br><a class="cta" href="account.html">Sign in / Create account →</a>
+  </div>
+  <form id="m-form">
+    <label>Name</label><input id="m-fname" required placeholder="Your name">
+    <label>Phone</label><input id="m-phone" placeholder="07xxx xxxxxx">
+    <label>Fishing history (helps us place you)</label>
+    <textarea id="m-history" rows="3" placeholder="Where you've fished, target species, experience…"></textarea>
+    <button class="cta" id="m-go" type="submit">Pay &amp; join →</button>
+    <p class="muted">Membership is confirmed once payment clears. Tickets are limited and may be reviewed by the club.</p>
+  </form>
+</div></div>
+
+<!-- Netlify notification -->
+<form name="syndicate-application" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="ticket"><input name="price"><input name="name"><input name="email"><input name="phone"><textarea name="history"></textarea><input name="bot-field">
+</form>
+
+<div class="toast" id="toast">—</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="booking-config.js"></script>
+<script>
+const sb=window.supabase.createClient(window.BARHAM_SUPABASE_URL,window.BARHAM_SUPABASE_ANON_KEY);
+const T=window.BARHAM_TICKETS, money=window.BARHAM.money, $=id=>document.getElementById(id);
+let session=null, profile=null, pick=null;
+
+function renderTiers(){
+  const box=$('tiers'); box.innerHTML='';
+  Object.entries(T).forEach(([k,t])=>{
+    const el=document.createElement('div'); el.className='tier'+(t.featured?' feat':'');
+    el.innerHTML=`${t.featured?'<span class="flag">Most access</span>':''}
+      <h3>${t.name}</h3><div class="scope">${t.scope}</div>
+      <div class="price">${money(t.price)}</div><div class="term">${t.term}</div>
+      <button data-k="${k}">Apply online →</button>`;
+    el.querySelector('button').onclick=()=>openModal(k);
+    box.appendChild(el);
+  });
+}
+function openModal(k){
+  pick=k; const t=T[k];
+  $('m-name').textContent=t.name; $('m-price').textContent=money(t.price)+' · '+t.term;
+  if(!session){ $('m-auth').style.display='block'; $('m-form').style.display='none'; }
+  else{ $('m-auth').style.display='none'; $('m-form').style.display='block';
+    $('m-fname').value=profile?.full_name||''; $('m-phone').value=profile?.phone||''; }
+  $('modal').classList.add('open');
+}
+$('m-close').onclick=()=>$('modal').classList.remove('open');
+$('modal').onclick=e=>{ if(e.target===$('modal'))$('modal').classList.remove('open'); };
+
+$('m-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!session||!pick)return;
+  const t=T[pick], btn=$('m-go'); btn.disabled=true; btn.textContent='Applying…';
+  const row={ user_id:session.user.id, ticket:pick, season_year:new Date().getFullYear(),
+    price:t.price, status:'pending', payment_status:'unpaid',
+    name:$('m-fname').value.trim(), email:session.user.email, phone:$('m-phone').value.trim(),
+    fishing_history:$('m-history').value.trim() };
+  const { data:ins, error }=await sb.from('memberships').insert(row).select().single();
+  if(error){ btn.disabled=false; btn.textContent='Pay & join →'; toast('Could not apply: '+error.message,'error'); return; }
+  try{ await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({'form-name':'syndicate-application',ticket:t.name,price:'£'+t.price,name:row.name,email:row.email,phone:row.phone,history:row.fishing_history}).toString()}); }catch(_){}
+  try{
+    const res=await fetch('/.netlify/functions/create-checkout',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'membership', membership_id:ins.id})});
+    const out=await res.json();
+    if(out.url){ location.href=out.url; return; }
+    throw new Error(out.error||'No checkout URL');
+  }catch(err){ btn.disabled=false; btn.textContent='Pay & join →'; toast('Applied, but payment could not start: '+err.message,'error'); }
+});
+
+async function initAuth(){
+  const { data }=await sb.auth.getSession(); session=data.session;
+  if(session){
+    const { data:p }=await sb.from('profiles').select('*').eq('id',session.user.id).single(); profile=p;
+    const nav=$('nav-account');
+    if(p&&p.role==='admin'){ nav.textContent='Admin'; nav.href='admin-bookings.html'; } else nav.textContent='My Account ✓';
+    const { data:m }=await sb.from('memberships').select('*').eq('user_id',session.user.id).order('applied_at',{ascending:false}).limit(1);
+    if(m&&m.length){ const x=m[0], box=$('my-status');
+      box.style.display='block';
+      box.innerHTML=`<strong>${T[x.ticket]?T[x.ticket].name:x.ticket}</strong> — <span class="pill ${x.status}">${x.status}</span>
+        <span style="color:var(--mute);font-size:13px;"> · ${x.season_year} · ${x.payment_status==='paid'?'paid ✓':money(x.price)+' due'}</span>`; }
+  }
+}
+function toast(m,k){ const t=$('toast'); t.textContent=m; t.className='toast show '+(k||''); setTimeout(()=>t.classList.remove('show'),3600); }
+if(new URLSearchParams(location.search).get('joined')==='1') $('paid-banner').style.display='block';
+renderTiers(); initAuth();
+</script>
+</body>
+</html>
