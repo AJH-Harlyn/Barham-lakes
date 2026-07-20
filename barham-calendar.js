@@ -171,8 +171,8 @@
   function pick(dateStr){
     if(!selIn||selOut){selIn=dateStr;selOut=null;}
     else if(dateStr>selIn){
-      if(!rangeClear(selIn,dateStr)){toast('Those nights include a taken date — pick a shorter stay.','error');return;}
-      selOut=dateStr;
+      if(!rangeClear(selIn,dateStr)){selIn=dateStr;selOut=null;toast('There’s a taken night in between — arrival moved here. Now pick your departure.','');}
+      else {selOut=dateStr;}
     } else {selIn=dateStr;selOut=null;}
     render();updateSummary();
   }
